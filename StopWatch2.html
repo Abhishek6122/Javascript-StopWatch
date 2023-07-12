@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        user-select: none;
+    }
+
+    body {
+        background: #f5f6fa;
+    }
+
+    main {
+        width: 800px;
+        height: 200px;
+        background: #badc58;
+        margin: auto;
+        margin-top: 100px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, .1);
+        border-radius: 0 60px;
+        cursor: default;
+        font-size: 80px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    main div {
+        width: 150px;
+        height: 150px;
+        font-size: 80px;
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+        line-height: 150px;
+    }
+
+    .buttons {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+    }
+
+    .buttons button {
+        font-size: 40px;
+        padding: 10px 25px;
+        font-family: sans-serif;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background: #2d3436;
+        color: ghostwhite;
+        border-radius: 10px;
+        margin: 0 20px;
+        transition: .1s ease-in-out;
+    }
+
+    .buttons button:active {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px #2d3436;
+    }
+    .button_2{
+        pointer-events: none;
+        opacity: .5;
+    }
+</style>
+
+<body>
+    <main>
+        <div class="hour">00</div>:
+        <div class="minute">00</div>:
+        <div class="second">00</div>:
+        <div class="th">00</div>
+    </main>
+    <div class="buttons">
+        <button class="start" onclick="Start()">Start</button>
+        <button class="stop" onclick="Stop()">Stop</button>
+        <button class="reset" onclick="Reset()">Reset</button>
+    </div>
+    <script>
+        let hr = document.querySelector("main .hour");
+        let min = document.querySelector("main .minute");
+        let sec = document.querySelector("main .second");
+        let th = document.querySelector("main .th");
+        
+        let hrtime = 0;
+        let mintime = 0;
+        let sectime = 0;
+        let thtime = 0;
+        let Timer;
+
+        let Start = () => {
+            document.querySelector(".buttons .start").classList.add("button_2");
+            Timer = setInterval(() => {
+                thtime++;
+                th.innerHTML = "0" + thtime;
+                if(thtime >= 10){
+                    th.innerHTML = thtime;
+                    if (thtime == 100) {
+                    thtime = 0;
+                    sectime++;
+                    sec.innerHTML = "0" + sectime;
+                    if(sectime >= 10){
+                        sec.innerHTML = sectime;
+                        if(sectime == 60){
+                            sectime = 0;
+                            mintime++;
+                            min.innerHTML = "0" + mintime;
+                            if(mintime >= 10){
+                                min.innerHTML = mintime;
+                                if(mintime == 60){
+                                    mintime = 0;
+                                    hrtime++;
+                                    hr.innerHTML = "0" + hrtime;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+
+                    // if (sectime == 60) {
+                    //     sectime = 0;
+                    //     mintime++;
+                    //     min.innerHTML = mintime;
+                    //     if (mintime == 60) {
+                    //         mintime = 0;
+                    //         hrtime++;
+                    //         hr.innerHTML = hrtime;
+                    //     }
+                    // }
+                }
+            }, 10)
+        }
+
+        let Stop = () => {
+            document.querySelector(".buttons .start").classList.remove("button_2");
+            clearInterval(Timer);
+        }
+
+        let Reset = () => {
+            hrtime = 0;
+            mintime = 0;
+            sectime = 0;
+            thtime = 0;
+            hr.innerHTML = '00';
+            min.innerHTML = '00';
+            sec.innerHTML = '00';
+            th.innerHTML = '00';
+            Stop();
+        }
+    </script>
+</body>
+
+</html>
